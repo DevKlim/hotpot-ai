@@ -6,13 +6,13 @@ FROM python:3.10-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-# Set the port the application will run on (Render injects its own PORT env var, but Uvicorn needs a default)
+# Set a default port for local testing if needed, Render will override via $PORT
 ENV PORT 8001
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Install system dependencies if needed (likely not for this app)
+# Install system dependencies if needed
 # RUN apt-get update && apt-get install -y --no-install-recommends some-package && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file into the container
@@ -25,12 +25,18 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy the application code into the container
 COPY ./app /app/app
 
-# Expose the port the app runs on
-# Render ignores this EXPOSE, but it's good practice. Render uses the PORT env var.
+# Expose the port the app runs on (informational)
 EXPOSE 8001
 
-# Define the command to run the application
-# Use 0.0.0.0 to make it accessible from outside the container within Render's network
-# Render will set the $PORT environment variable, which Uvicorn will use if specified like this.
-# If Render doesn't set $PORT reliably, fallback to the ENV PORT defined above.
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "$PORT"]
+# --- CHANGE THIS LINE ---
+# Define the command to run the application using shell form to expand $PORT
+# Use 'exec' to replace the shell process with uvicorn, which is good practice
+CMD exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}
+# --- END CHANGE ---
+
+# Explanation of the new CMD:
+# - `exec`: Replaces the shell process with the uvicorn process. This is cleaner for signal handling.
+# - `uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8001}`: This is now executed by the shell.
+# - `${PORT:-8001}`: This is shell parameter expansion.
+#   - If the environment variable `PORT` is set (which Render does), it uses that value.
+#   - If `PORT` is *not* set or is empty, it uses the default value `8001` (useful if you run the container locally without setting PORT).
