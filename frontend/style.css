@@ -1,0 +1,411 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive; /* Pixel font */
+    background-color: #4a3f35; /* Earthy brown */
+    color: #f0e0d0; /* Light cream */
+    line-height: 1.6;
+    padding: 20px;
+    font-size: 10px; /* Base size for pixel font, scale up if needed */
+}
+
+header, footer {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #2a231d;
+    border: 2px solid #c8b08a;
+    border-radius: 5px;
+}
+
+header h1 {
+    color: #ffcc00; /* Gold */
+    margin-bottom: 5px;
+    font-size: 1.8em;
+}
+
+.game-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+section {
+    background-color: #6a5a4a; /* Darker wood */
+    border: 3px solid #c8b08a; /* Tan border */
+    border-radius: 8px;
+    padding: 15px;
+    min-width: 250px;
+    flex: 1; /* Allow sections to grow */
+}
+
+h2, h3 {
+    color: #ffd700; /* Gold */
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    border-bottom: 1px dashed #c8b08a;
+    padding-bottom: 5px;
+}
+
+.item-grid, .method-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.ingredient-button, .method-button {
+    font-family: inherit;
+    font-size: 0.9em;
+    padding: 8px 12px;
+    background-color: #8b7e6a; /* Lighter wood */
+    color: #ffffff;
+    border: 2px solid #a0907a;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    text-align: center;
+}
+
+.ingredient-button:hover, .method-button:hover {
+    background-color: #a0907a;
+}
+.ingredient-button:active, .method-button:active {
+    transform: scale(0.95);
+}
+
+.ingredient-button.selected, .method-button.selected {
+    background-color: #ffcc00; /* Gold selection */
+    color: #333;
+    border-color: #ffffff;
+}
+
+.cooking-station {
+    text-align: center;
+}
+
+.pot-area {
+    background-color: #3a3025; /* Dark pot color */
+    /* If using image:
+    background-image: url('assets/img/pot_background.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; */
+    border: 5px solid #5a4a3a;
+    border-radius: 50%; /* Make it roundish */
+    padding: 20px;
+    margin: 15px auto;
+    min-height: 150px; /* Ensure space */
+    width: 80%; /* Adjust as needed */
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pot-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    min-height: 40px; /* Space for ingredients */
+    margin-bottom: 10px;
+}
+
+.pot-ingredient {
+    background-color: #c8b08a;
+    color: #333;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+}
+
+#method-selection {
+    margin-bottom: 15px;
+}
+
+.action-button {
+    font-family: inherit;
+    font-size: 1.1em;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: 2px solid #388E3C;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+.action-button:hover {
+    background-color: #66BB6A;
+}
+.action-button:disabled {
+    background-color: #9E9E9E;
+    cursor: not-allowed;
+    border-color: #757575;
+}
+
+.secondary-button {
+    font-family: inherit;
+    font-size: 0.9em;
+    padding: 6px 12px;
+    background-color: #757575; /* Grey */
+    color: white;
+    border: 1px solid #616161;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.secondary-button:hover {
+    background-color: #9E9E9E;
+}
+
+
+#loading-indicator {
+    margin-top: 15px;
+    color: #ffeb3b; /* Yellow */
+    font-size: 1.1em;
+}
+
+.result-area {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #3a3025;
+    border: 2px dashed #c8b08a;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.result-area h3 {
+    color: #ffeb3b; /* Yellow */
+    text-align: center;
+}
+
+.result-area p {
+    margin-bottom: 8px;
+}
+
+.inventory-panel ul {
+    list-style: none;
+    padding: 0;
+    max-height: 300px; /* Limit height */
+    overflow-y: auto; /* Add scrollbar if needed */
+}
+
+.inventory-panel li {
+    background-color: #8b7e6a;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    border-left: 5px solid #ffcc00; /* Highlight color */
+}
+.inventory-panel li strong { /* Dish name */
+    color: #ffffff;
+}
+.inventory-panel li em { /* Quality */
+    font-size: 0.9em;
+    color: #e0e0e0;
+    margin-left: 10px;
+}
+.inventory-panel li .desc { /* Description */
+    display: block;
+    font-size: 0.8em;
+    color: #d0c0b0;
+    margin-top: 3px;
+}
+
+
+.hidden {
+    display: none;
+}
+
+/* Flashing effect for new discovery */
+.discovery-flash {
+    text-align: center;
+    color: #00ff00; /* Bright green */
+    font-weight: bold;
+    animation: flash 1.5s infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Basic responsiveness */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+    }
+    section {
+        min-width: 90%;
+    }
+    body {
+        font-size: 9px; /* Slightly smaller on mobile */
+    }
+}
+
+/* Add these styles to your existing style.css */
+
+.add-item-form {
+    display: flex;
+    margin-bottom: 10px;
+    gap: 5px;
+}
+
+.add-item-form input[type="text"] {
+    flex-grow: 1;
+    padding: 5px;
+    font-family: inherit; /* Use pixel font */
+    font-size: 0.9em;
+    border: 1px solid #a0907a;
+    background-color: #f0e0d0;
+    color: #333;
+    border-radius: 3px;
+}
+
+.add-button {
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: 1em;
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #388E3C;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.add-button:hover {
+    background-color: #66BB6A;
+}
+
+.method-effect-input {
+    margin-top: 15px;
+    text-align: center; /* Center label and input */
+}
+
+.method-effect-input label {
+    display: block; /* Label on its own line */
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: #ffd700; /* Gold */
+}
+
+.method-effect-input input[type="text"] {
+    width: 80%; /* Make input wider */
+    padding: 6px;
+    font-family: inherit;
+    font-size: 0.9em;
+    border: 1px solid #a0907a;
+    background-color: #f0e0d0;
+    color: #333;
+    border-radius: 3px;
+    text-align: center; /* Center text within input */
+}
+
+
+.modifier-text {
+    font-style: italic;
+    color: #cccccc; /* Lighter grey for modifier */
+    font-size: 0.9em;
+    margin-top: -5px; /* Pull closer to name */
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+/* Adjust inventory list item if needed */
+.inventory-panel li .modifier { /* Style for modifier in inventory */
+    display: block;
+    font-size: 0.8em;
+    font-style: italic;
+    color: #c0b0a0;
+    margin-left: 10px; /* Indent slightly */
+}
+
+#add-result-to-ingredients-button {
+    background-color: #2196F3; /* Blue */
+    border-color: #1976D2;
+    margin-top: 10px;
+    display: block; /* Make it block level */
+    margin-left: auto;
+    margin-right: auto; /* Center the button */
+}
+#add-result-to-ingredients-button:hover {
+    background-color: #64B5F6;
+}
+
+.result-area {
+    /* ... existing styles ... */
+    text-align: center; /* Center align content in result area */
+}
+
+.result-area h3#dish-name { /* Target the name specifically */
+    color: #ffeb3b; /* Yellow */
+    margin-bottom: 2px; /* Reduce space below name */
+    font-size: 1.1em;
+}
+
+.result-area p#dish-modifier { /* Target the modifier specifically */
+    font-style: italic;
+    color: #cccccc; /* Lighter grey */
+    font-size: 0.9em;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 10px; /* Add space below modifier */
+    min-height: 1em; /* Ensure space even if empty */
+}
+
+.result-area p#dish-description {
+     text-align: left; /* Keep description left-aligned if preferred */
+     margin-bottom: 8px;
+}
+
+.result-area p strong { /* Quality label */
+     margin-top: 5px;
+     display: inline-block; /* Allow margin-top */
+}
+
+
+/* Style modifier in inventory list */
+.inventory-panel li {
+    background-color: #8b7e6a;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    border-left: 5px solid #ffcc00;
+}
+.inventory-panel li strong { /* Dish name */
+    color: #ffffff;
+    display: block; /* Name on its own line */
+    margin-bottom: 2px;
+}
+.inventory-panel li em { /* Quality */
+    font-size: 0.9em;
+    color: #e0e0e0;
+    margin-left: 5px; /* Adjust spacing */
+}
+
+.inventory-panel li .modifier { /* Style for modifier in inventory */
+    display: block; /* Modifier on its own line */
+    font-size: 0.85em;
+    font-style: italic;
+    color: #d0c0b0; /* Slightly different color */
+    margin-left: 0; /* No extra indent needed if on new line */
+    margin-bottom: 4px; /* Space below modifier */
+    min-height: 1em; /* Ensure space even if empty */
+}
+
+.inventory-panel li .desc { /* Description */
+    display: block;
+    font-size: 0.8em;
+    color: #d0c0b0;
+    margin-top: 3px;
+}

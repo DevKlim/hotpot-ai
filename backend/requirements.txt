@@ -1,0 +1,7 @@
+# backend/requirements.txt
+fastapi
+uvicorn[standard]  # Includes websockets and better performance libraries
+python-dotenv
+google-generativeai
+pydantic
+requests # Good practice to include if llm_handler might use it indirectly or for future features
