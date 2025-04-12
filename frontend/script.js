@@ -1,7 +1,7 @@
 // backend/frontend/script.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    const backendUrl = 'http://localhost:8001';
+    const backendUrl = 'https://hotpot-ai-backend.onrender.com';
 
     // --- DOM Elements ---
     const ingredientButtonsContainer = document.getElementById('ingredient-buttons');
