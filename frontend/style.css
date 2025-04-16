@@ -1,411 +1,543 @@
-/* Basic Reset */
+/* --- Global Styles & Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap'); /* Example sleek, rounded font */
+
+:root {
+    /* Color Palette (Adjust to your liking) */
+    --bg-color: #fdf6e3; /* Soft Parchment/Cream */
+    --panel-bg: #ffffff; /* White panels for clean look */
+    --panel-border: #e0d8c5; /* Soft border color */
+    --text-color: #5D4037; /* Dark Brown */
+    --heading-color: #4e342e; /* Slightly darker brown for headings */
+    --primary-action: #66bb6a; /* Soft Green */
+    --primary-action-hover: #57a05a;
+    --secondary-action: #bdbdbd; /* Grey */
+    --secondary-action-hover: #a8a8a8;
+    --accent-color: #81c784; /* Lighter Green for accents */
+    --input-bg: #f7f3e9; /* Slightly off-white for inputs */
+    --input-border: #d2cbbc;
+    --danger-color: #ef5350; /* For remove buttons etc. */
+    --danger-hover: #e53935;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+
+    /* Font */
+    --main-font: 'Nunito', sans-serif;
+
+    /* Spacing */
+    --base-padding: 15px;
+    --container-gap: 20px;
+    --border-radius: 8px; /* Consistent rounded corners */
+}
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Press Start 2P', cursive; /* Pixel font */
-    background-color: #4a3f35; /* Earthy brown */
-    color: #f0e0d0; /* Light cream */
+    font-family: var(--main-font);
+    background-color: var(--bg-color);
+    background-image: url('assets/img/pot_background.png'); /* Add the background */
+    background-size: cover; /* Cover the entire page */
+    background-position: center center;
+    background-attachment: fixed; /* Keep background fixed during scroll */
+    color: var(--text-color);
     line-height: 1.6;
-    padding: 20px;
-    font-size: 10px; /* Base size for pixel font, scale up if needed */
+    padding: var(--base-padding); /* Add padding around the whole page */
 }
 
-header, footer {
+/* Add a semi-transparent overlay if background makes text hard to read */
+/*
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.5); // Adjust opacity
+    z-index: -1;
+}
+*/
+
+h1, h2, h3, h4 {
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-bottom: 0.8em;
+}
+
+h1 {
     text-align: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #2a231d;
-    border: 2px solid #c8b08a;
-    border-radius: 5px;
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    color: var(--heading-color);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
-header h1 {
-    color: #ffcc00; /* Gold */
-    margin-bottom: 5px;
-    font-size: 1.8em;
+header > p {
+    text-align: center;
+    margin-bottom: var(--container-gap);
+    font-size: 1.1em;
+    color: var(--text-color);
 }
 
+/* --- Layout: Game Container --- */
 .game-container {
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens if needed */
+    gap: var(--container-gap);
+    max-width: 1400px; /* Limit overall width */
+    margin: 0 auto; /* Center the container */
+    align-items: flex-start; /* Align panels to the top */
 }
 
-section {
-    background-color: #6a5a4a; /* Darker wood */
-    border: 3px solid #c8b08a; /* Tan border */
-    border-radius: 8px;
-    padding: 15px;
-    min-width: 250px;
-    flex: 1; /* Allow sections to grow */
+/* --- Panels (Sections) --- */
+.ingredients-panel,
+.cooking-station,
+.inventory-panel {
+    background-color: var(--panel-bg);
+    padding: calc(var(--base-padding) * 1.2);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    border: 1px solid var(--panel-border);
+    flex: 1; /* Default: Distribute space equally */
+    min-width: 280px; /* Prevent panels from becoming too narrow */
 }
 
-h2, h3 {
-    color: #ffd700; /* Gold */
-    margin-bottom: 10px;
+.cooking-station {
+    flex: 1.5; /* Make the cooking station slightly wider */
+}
+
+section h2 {
     text-align: center;
-    font-size: 1.2em;
-    border-bottom: 1px dashed #c8b08a;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--panel-border);
+    margin-bottom: var(--base-padding);
+    font-size: 1.4em;
 }
 
+/* --- Item Grids (Ingredients/Methods) --- */
 .item-grid, .method-options {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    justify-content: center;
-    margin-bottom: 15px;
+    margin-bottom: var(--base-padding);
 }
 
-.ingredient-button, .method-button {
-    font-family: inherit;
-    font-size: 0.9em;
-    padding: 8px 12px;
-    background-color: #8b7e6a; /* Lighter wood */
-    color: #ffffff;
-    border: 2px solid #a0907a;
-    border-radius: 4px;
+/* --- Buttons --- */
+button {
+    font-family: var(--main-font);
+    border: none;
+    border-radius: calc(var(--border-radius) / 1.5); /* Slightly less round */
+    padding: 10px 15px;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    text-align: center;
+    font-weight: 600;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    font-size: 0.95em;
 }
 
-.ingredient-button:hover, .method-button:hover {
-    background-color: #a0907a;
-}
-.ingredient-button:active, .method-button:active {
-    transform: scale(0.95);
+button:active {
+    transform: scale(0.98); /* Slight press effect */
 }
 
-.ingredient-button.selected, .method-button.selected {
-    background-color: #ffcc00; /* Gold selection */
-    color: #333;
-    border-color: #ffffff;
+/* General Item/Method Button */
+.item-button, .method-button {
+    background-color: #e8f5e9; /* Light green */
+    color: #2e7d32; /* Darker green text */
+    border: 1px solid #c8e6c9;
 }
 
-.cooking-station {
-    text-align: center;
+.item-button:hover, .method-button:hover {
+    background-color: #dcedc8;
+    box-shadow: 0 2px 4px var(--shadow-color);
 }
 
-.pot-area {
-    background-color: #3a3025; /* Dark pot color */
-    /* If using image:
-    background-image: url('assets/img/pot_background.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center; */
-    border: 5px solid #5a4a3a;
-    border-radius: 50%; /* Make it roundish */
-    padding: 20px;
-    margin: 15px auto;
-    min-height: 150px; /* Ensure space */
-    width: 80%; /* Adjust as needed */
-    max-width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.pot-slots {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    justify-content: center;
-    min-height: 40px; /* Space for ingredients */
-    margin-bottom: 10px;
-}
-
-.pot-ingredient {
-    background-color: #c8b08a;
-    color: #333;
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 0.8em;
-}
-
-#method-selection {
-    margin-bottom: 15px;
-}
-
-.action-button {
-    font-family: inherit;
-    font-size: 1.1em;
-    padding: 10px 20px;
-    background-color: #4CAF50; /* Green */
+/* Selected Method Button */
+.method-button.selected {
+    background-color: var(--accent-color);
     color: white;
-    border: 2px solid #388E3C;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--primary-action-hover);
+}
+
+/* Action Buttons */
+.action-button {
+    background-color: var(--primary-action);
+    color: white;
+    width: 100%; /* Make cook/add buttons full width */
     margin-top: 10px;
+    padding: 12px 15px; /* Slightly larger */
+    font-size: 1.1em;
 }
+
 .action-button:hover {
-    background-color: #66BB6A;
-}
-.action-button:disabled {
-    background-color: #9E9E9E;
-    cursor: not-allowed;
-    border-color: #757575;
+    background-color: var(--primary-action-hover);
+    box-shadow: 0 3px 6px var(--shadow-color);
 }
 
 .secondary-button {
-    font-family: inherit;
-    font-size: 0.9em;
-    padding: 6px 12px;
-    background-color: #757575; /* Grey */
-    color: white;
-    border: 1px solid #616161;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px;
+    background-color: var(--secondary-action);
+    color: #333;
+    width: 100%;
+    margin-top: 10px;
 }
+
 .secondary-button:hover {
-    background-color: #9E9E9E;
+    background-color: var(--secondary-action-hover);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.add-button {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 6px 12px; /* Smaller padding */
+    font-size: 1.2em; /* Make '+' bigger */
+    line-height: 1; /* Adjust line height for '+' */
+}
+.add-button:hover {
+    background-color: var(--primary-action-hover);
 }
 
 
-#loading-indicator {
-    margin-top: 15px;
-    color: #ffeb3b; /* Yellow */
-    font-size: 1.1em;
-}
-
-.result-area {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #3a3025;
-    border: 2px dashed #c8b08a;
-    border-radius: 5px;
-    text-align: left;
-}
-
-.result-area h3 {
-    color: #ffeb3b; /* Yellow */
-    text-align: center;
-}
-
-.result-area p {
-    margin-bottom: 8px;
-}
-
-.inventory-panel ul {
-    list-style: none;
-    padding: 0;
-    max-height: 300px; /* Limit height */
-    overflow-y: auto; /* Add scrollbar if needed */
-}
-
-.inventory-panel li {
-    background-color: #8b7e6a;
-    padding: 8px;
-    margin-bottom: 5px;
-    border-radius: 3px;
-    border-left: 5px solid #ffcc00; /* Highlight color */
-}
-.inventory-panel li strong { /* Dish name */
-    color: #ffffff;
-}
-.inventory-panel li em { /* Quality */
-    font-size: 0.9em;
-    color: #e0e0e0;
-    margin-left: 10px;
-}
-.inventory-panel li .desc { /* Description */
-    display: block;
-    font-size: 0.8em;
-    color: #d0c0b0;
-    margin-top: 3px;
-}
-
-
-.hidden {
-    display: none;
-}
-
-/* Flashing effect for new discovery */
-.discovery-flash {
-    text-align: center;
-    color: #00ff00; /* Bright green */
-    font-weight: bold;
-    animation: flash 1.5s infinite;
-    margin-bottom: 10px;
-}
-
-@keyframes flash {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
-
-/* Basic responsiveness */
-@media (max-width: 768px) {
-    .game-container {
-        flex-direction: column;
-    }
-    section {
-        min-width: 90%;
-    }
-    body {
-        font-size: 9px; /* Slightly smaller on mobile */
-    }
-}
-
-/* Add these styles to your existing style.css */
-
+/* --- Forms & Inputs --- */
 .add-item-form {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: var(--base-padding);
     gap: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    font-family: var(--main-font);
+    padding: 8px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: calc(var(--border-radius) / 2);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 0.95em;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(129, 199, 132, 0.3); /* Soft glow matching accent */
 }
 
 .add-item-form input[type="text"] {
     flex-grow: 1;
-    padding: 5px;
-    font-family: inherit; /* Use pixel font */
-    font-size: 0.9em;
-    border: 1px solid #a0907a;
-    background-color: #f0e0d0;
-    color: #333;
-    border-radius: 3px;
-}
-
-.add-button {
-    padding: 5px 10px;
-    font-family: inherit;
-    font-size: 1em;
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #388E3C;
-    border-radius: 3px;
-    cursor: pointer;
-}
-.add-button:hover {
-    background-color: #66BB6A;
 }
 
 .method-effect-input {
-    margin-top: 15px;
-    text-align: center; /* Center label and input */
+    margin-top: var(--base-padding);
 }
-
 .method-effect-input label {
-    display: block; /* Label on its own line */
+    display: block;
     margin-bottom: 5px;
+    font-weight: 600;
     font-size: 0.9em;
-    color: #ffd700; /* Gold */
+    color: var(--heading-color);
 }
-
 .method-effect-input input[type="text"] {
-    width: 80%; /* Make input wider */
-    padding: 6px;
-    font-family: inherit;
-    font-size: 0.9em;
-    border: 1px solid #a0907a;
-    background-color: #f0e0d0;
-    color: #333;
-    border-radius: 3px;
-    text-align: center; /* Center text within input */
+    width: 100%;
 }
 
+/* --- Cooking Station --- */
+.pot-area {
+    margin-bottom: var(--base-padding);
+    padding: var(--base-padding);
+    background-color: rgba(255, 255, 255, 0.5); /* Slightly see-through */
+    border: 1px dashed var(--input-border);
+    border-radius: var(--border-radius);
+}
+
+.pot-slots-detailed {
+    min-height: 150px;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    background-color: rgba(247, 243, 233, 0.7); /* Slightly opaque input area background */
+    margin-bottom: var(--base-padding);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pot-ingredient-item {
+    background-color: #fff;
+    padding: 8px 12px;
+    border-radius: calc(var(--border-radius) / 1.5);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95em;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    border: 1px solid var(--panel-border);
+}
+
+.pot-ingredient-name {
+    font-weight: 600;
+    flex-grow: 1;
+    color: var(--text-color);
+}
+
+.pot-ingredient-quantity {
+    width: 65px;
+    text-align: right;
+}
+
+.pot-ingredient-unit {
+    min-width: 55px; /* Give unit dropdown enough space */
+    background-color: #fff; /* Ensure select dropdown is white */
+    padding: 6px 8px; /* Adjust padding if needed */
+}
+
+.pot-ingredient-remove {
+    background-color: transparent;
+    color: var(--danger-color);
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em; /* Slightly larger X */
+    margin-left: 5px;
+    padding: 0; /* Reset padding */
+}
+
+.pot-ingredient-remove:hover {
+    background-color: rgba(239, 83, 80, 0.1); /* Light red background on hover */
+    color: var(--danger-hover);
+}
+
+.placeholder-text {
+    color: #a8a8a8;
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* --- Result Display --- */
+.result-area {
+    margin-top: var(--container-gap);
+    padding: var(--base-padding);
+    border-radius: var(--border-radius);
+    border: 2px solid var(--accent-color); /* Use accent color for result border */
+    background-color: #f0f4c3; /* Light lime/yellowish background for results */
+    box-shadow: 0 3px 8px var(--shadow-color);
+}
+
+.result-area.hidden {
+    display: none;
+}
+
+.result-area h2 {
+    text-align: center;
+    font-size: 1.3em;
+    color: var(--heading-color);
+}
+
+#dish-name {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--primary-action-hover); /* Darker green for dish name */
+}
 
 .modifier-text {
     font-style: italic;
-    color: #cccccc; /* Lighter grey for modifier */
-    font-size: 0.9em;
-    margin-top: -5px; /* Pull closer to name */
+    color: #757575; /* Grey */
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.dish-details {
+    margin-top: var(--base-padding);
+    padding-top: var(--base-padding);
+    border-top: 1px dashed var(--panel-border);
+}
+
+.dish-details p {
     margin-bottom: 8px;
-    text-align: center;
 }
 
-/* Adjust inventory list item if needed */
-.inventory-panel li .modifier { /* Style for modifier in inventory */
-    display: block;
-    font-size: 0.8em;
-    font-style: italic;
-    color: #c0b0a0;
-    margin-left: 10px; /* Indent slightly */
+.dish-details strong {
+    color: var(--heading-color);
+    margin-right: 5px;
 }
 
-#add-result-to-ingredients-button {
-    background-color: #2196F3; /* Blue */
-    border-color: #1976D2;
+#dish-rationale-container {
     margin-top: 10px;
-    display: block; /* Make it block level */
-    margin-left: auto;
-    margin-right: auto; /* Center the button */
-}
-#add-result-to-ingredients-button:hover {
-    background-color: #64B5F6;
-}
-
-.result-area {
-    /* ... existing styles ... */
-    text-align: center; /* Center align content in result area */
+    padding: 10px;
+    background-color: rgba(255, 236, 179, 0.4); /* Light orange/yellow */
+    border-left: 4px solid #ffb74d; /* Orange */
+    border-radius: 4px;
+    font-size: 0.9em;
 }
 
-.result-area h3#dish-name { /* Target the name specifically */
-    color: #ffeb3b; /* Yellow */
-    margin-bottom: 2px; /* Reduce space below name */
+#dish-rationale-container.hidden {
+    display: none;
+}
+
+#dish-macros-container {
+    margin-top: 10px;
+    padding: 12px;
+    background-color: rgba(129, 212, 250, 0.2); /* Light blue */
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(79, 195, 247, 0.4);
+}
+
+.macros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 5px 15px;
+    font-size: 0.9em;
+}
+
+.macros-grid h4 {
+    grid-column: 1 / -1;
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(79, 195, 247, 0.4);
+    color: #0277bd; /* Darker blue */
     font-size: 1.1em;
 }
 
-.result-area p#dish-modifier { /* Target the modifier specifically */
-    font-style: italic;
-    color: #cccccc; /* Lighter grey */
+.macros-grid p {
+    margin: 0;
+    color: var(--text-color);
+}
+.macros-grid span {
+    font-weight: 600;
+    color: #0288d1; /* Medium blue */
+}
+
+#dish-macros-container.hidden {
+    display: none;
+}
+
+/* Discovery Flash */
+.discovery-flash {
+    text-align: center;
+    font-weight: 600;
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 10px;
     font-size: 0.9em;
-    margin-top: 0; /* Remove top margin */
-    margin-bottom: 10px; /* Add space below modifier */
-    min-height: 1em; /* Ensure space even if empty */
+}
+.discovery-flash.new {
+    background-color: rgba(255, 215, 0, 0.3); /* Gold-ish */
+    color: #b58900;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+}
+.discovery-flash.cached {
+    background-color: rgba(189, 189, 189, 0.3); /* Grey */
+    color: #616161;
+    border: 1px solid rgba(189, 189, 189, 0.5);
 }
 
-.result-area p#dish-description {
-     text-align: left; /* Keep description left-aligned if preferred */
-     margin-bottom: 8px;
+/* Quality Styling */
+.quality-poor { color: #e57373; font-weight: 600; } /* Soft Red */
+.quality-dubious { color: #90a4ae; font-weight: 600; font-style: italic; } /* Blue Grey */
+.quality-decent { color: #ffb74d; font-weight: 600; } /* Orange */
+.quality-good { color: #81c784; font-weight: 600; } /* Green */
+.quality-excellent { color: #64b5f6; font-weight: 600; } /* Blue */
+.quality-unknown, .quality-error { color: #757575; font-weight: 600; }
+
+
+/* --- Discovery Log --- */
+.inventory-panel ul {
+    list-style: none;
+    padding: 0;
+    max-height: 450px; /* Adjust height */
+    overflow-y: auto;
+    margin-top: var(--base-padding);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--panel-border);
 }
 
-.result-area p strong { /* Quality label */
-     margin-top: 5px;
-     display: inline-block; /* Allow margin-top */
+/* Scrollbar styling (Optional, Webkit browsers) */
+.inventory-panel ul::-webkit-scrollbar {
+    width: 8px;
+}
+.inventory-panel ul::-webkit-scrollbar-track {
+    background: var(--input-bg);
+    border-radius: 4px;
+}
+.inventory-panel ul::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-action);
+    border-radius: 4px;
+    border: 2px solid var(--input-bg); /* Creates padding around thumb */
 }
 
-
-/* Style modifier in inventory list */
 .inventory-panel li {
-    background-color: #8b7e6a;
-    padding: 8px;
-    margin-bottom: 5px;
-    border-radius: 3px;
-    border-left: 5px solid #ffcc00;
+    background-color: #fff;
+    padding: 10px var(--base-padding);
+    margin-bottom: 0; /* Remove margin, use border */
+    border-bottom: 1px solid var(--panel-border);
+    font-size: 0.95em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Pushes quality to the right */
+    align-items: center;
+    gap: 10px;
 }
-.inventory-panel li strong { /* Dish name */
-    color: #ffffff;
-    display: block; /* Name on its own line */
-    margin-bottom: 2px;
+.inventory-panel li:last-child {
+    border-bottom: none;
 }
-.inventory-panel li em { /* Quality */
+.inventory-panel li:nth-child(even) {
+     background-color: #f9f9f9; /* Subtle alternating background */
+}
+
+
+.inventory-panel li strong { /* Dish name in log */
+    color: var(--heading-color);
+}
+.inventory-panel li .modifier-text {
     font-size: 0.9em;
-    color: #e0e0e0;
-    margin-left: 5px; /* Adjust spacing */
-}
-
-.inventory-panel li .modifier { /* Style for modifier in inventory */
-    display: block; /* Modifier on its own line */
-    font-size: 0.85em;
+    color: #757575;
     font-style: italic;
-    color: #d0c0b0; /* Slightly different color */
-    margin-left: 0; /* No extra indent needed if on new line */
-    margin-bottom: 4px; /* Space below modifier */
-    min-height: 1em; /* Ensure space even if empty */
+}
+.inventory-panel li span[class*="quality-"] { /* Target quality span */
+   font-size: 0.9em;
+   white-space: nowrap; /* Prevent quality text from wrapping */
 }
 
-.inventory-panel li .desc { /* Description */
-    display: block;
-    font-size: 0.8em;
-    color: #d0c0b0;
-    margin-top: 3px;
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    margin-top: calc(var(--container-gap) * 2);
+    padding-top: var(--base-padding);
+    border-top: 1px solid var(--panel-border);
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* --- Loading Indicator --- */
+#loading-indicator {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--primary-action-hover);
+}
+#loading-indicator.hidden {
+    display: none;
+}
+
+/* --- Responsive Adjustments (Example) --- */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column; /* Stack panels vertically */
+    }
+    .cooking-station {
+        flex: 1; /* Reset flex factor */
+    }
+    h1 {
+        font-size: 2em;
+    }
 }

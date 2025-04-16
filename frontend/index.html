@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotpot.AI - Culinary Prototype</title> <!-- Changed title -->
+    <title>Hotpot.AI - Culinary Crafter</title> <!-- Changed title -->
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,16 +11,15 @@
 </head>
 <body>
     <header>
-        <h1>🍳 HOTPOT.AI 🍳</h1> <!-- Updated Emoji -->
-        <p>Combine real ingredients and methods to discover culinary results!</p>
+        <h1>🍳 HOTPOT.AI v0.3 🍳</h1> <!-- Updated Emoji & Version -->
+        <p>Combine real ingredients (with amounts!) and methods to discover culinary results!</p>
     </header>
 
     <main class="game-container">
         <section class="ingredients-panel">
             <h2>Ingredients</h2>
-            <!-- Dynamic Add Ingredient -->
             <div class="add-item-form">
-                <input type="text" id="new-ingredient-input" placeholder="Add new ingredient...">
+                <input type="text" id="new-ingredient-input" placeholder="Add new ingredient name...">
                 <button id="add-ingredient-button" class="add-button">+</button>
             </div>
             <div id="ingredient-buttons" class="item-grid">
@@ -29,14 +28,15 @@
         </section>
 
         <section class="cooking-station">
-            <h2>Cooking Station</h2> <!-- Changed title -->
+            <h2>Cooking Station</h2> <!-- Clarified limit -->
             <div class="pot-area" id="pot-area">
-                <div id="pot-ingredients" class="pot-slots">
-                    <!-- Selected ingredients appear here -->
+                <!-- UPDATED: Pot ingredients area will now hold complex items -->
+                <div id="pot-ingredients" class="pot-slots-detailed">
+                    <p class="placeholder-text">Click ingredients to add them here...</p>
+                    <!-- Selected ingredients with qty/unit inputs appear here -->
                 </div>
                 <div id="method-selection">
-                    <h3>Method:</h3>
-                     <!-- Dynamic Add Method -->
+                    <h3>Method (Select 1):</h3>
                     <div class="add-item-form">
                          <input type="text" id="new-method-input" placeholder="Add new method...">
                          <button id="add-method-button" class="add-button">+</button>
@@ -44,7 +44,6 @@
                     <div id="method-buttons" class="method-options">
                         <!-- Method buttons will be added here by JS -->
                     </div>
-                    <!-- Method Effect Input -->
                     <div class="method-effect-input">
                         <label for="method-effect-input">Method Details (Optional):</label>
                         <input type="text" id="method-effect-input" placeholder="e.g., until smooth, for 5 mins...">
@@ -52,24 +51,35 @@
                 </div>
                 <button id="cook-button" class="action-button">Cook!</button>
                 <button id="clear-button" class="secondary-button">Clear Pot</button>
-                <div id="loading-indicator" class="hidden">🥣 Mixing... Please wait... 🥣</div> <!-- Updated Emoji -->
+                <div id="loading-indicator" class="hidden">🧪 Analyzing Reaction... Please wait... 🧪</div> <!-- Updated Emoji -->
             </div>
             <div id="result-display" class="result-area hidden">
                 <h2>Result:</h2>
                 <p id="dish-discovery" class="discovery-flash"></p>
                 <h3 id="dish-name"></h3>
-                <p id="dish-modifier" class="modifier-text"></p> <!-- Added for modifier -->
-                <p id="dish-description"></p>
-                <p><strong>Quality:</strong> <span id="dish-quality"></span></p>
-                <!-- Add to Ingredients Button -->
-                <button id="add-result-to-ingredients-button" class="action-button hidden">Add to Ingredients</button>
-                <!-- Keep It button removed for now, replaced by Add to Ingredients -->
-                <!-- <button id="add-to-inventory-button" class="action-button hidden">Keep It!</button> -->
+                <p id="dish-modifier" class="modifier-text"></p>
+                <!-- Style this section nicely -->
+                <div class="dish-details">
+                    <p><strong>Description:</strong> <span id="dish-description"></span></p>
+                    <p><strong>Quality:</strong> <span id="dish-quality"></span></p>
+                    <!-- NEW: Rationale Display -->
+                    <p id="dish-rationale-container" class="hidden"><strong>Rationale:</strong> <span id="dish-rationale"></span></p>
+                    <!-- NEW: Macros Display -->
+                    <div id="dish-macros-container" class="macros-grid hidden">
+                        <h4>Estimated Macros (Total):</h4>
+                        <p>Calories: <span id="dish-calories">N/A</span></p>
+                        <p>Protein: <span id="dish-protein">N/A</span></p>
+                        <p>Fat: <span id="dish-fat">N/A</span></p>
+                        <p>Carbs: <span id="dish-carbs">N/A</span></p>
+                    </div>
+                </div>
+                 <!-- Keep Add to Ingredients button -->
+                 <button id="add-result-to-ingredients-button" class="action-button hidden">Add Base Name to Ingredients</button>
             </div>
         </section>
 
         <section class="inventory-panel">
-            <h2>My Discoveries Log</h2> <!-- Changed title -->
+            <h2>My Discoveries Log</h2>
             <ul id="inventory-list">
                 <!-- Discovered dishes list -->
             </ul>
@@ -77,7 +87,7 @@
     </main>
 
     <footer>
-        <p>Prototype v0.2 - Real-world focus</p>
+        <p>Prototype v0.3 - Amounts Matter!</p>
     </footer>
 
     <script src="script.js"></script>
